@@ -17,30 +17,22 @@ class Solution {
     public void insertIntoBSTHelper(TreeNode root, int val) {
         if (root.val < val) {
             if (root.right == null) {
-                TreeNode ans = new TreeNode();
-                ans.val = val;
-                root.right = ans;
+                root.right = new TreeNode(val);
                 return;
             }
             insertIntoBSTHelper(root.right, val);
         } else {
             if (root.left == null) {
-                TreeNode ans = new TreeNode();
-                ans.val = val;
-                root.left = ans;
+                root.left = new TreeNode(val);
                 return;
             }
             insertIntoBSTHelper(root.left, val);
-
         }
-
     }
 
     public TreeNode insertIntoBST(TreeNode root, int val) {
         if (root == null) {
-            TreeNode ans = new TreeNode();
-            ans.val = val;
-            return ans;
+            return new TreeNode(val);
         }
         insertIntoBSTHelper(root, val);
         return root;

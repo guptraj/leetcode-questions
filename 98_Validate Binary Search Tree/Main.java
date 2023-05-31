@@ -13,6 +13,7 @@
  * }
  * }
  */
+// approach 1 by inorder transversal 
 class Solution {
     long prev = Long.MIN_VALUE;
 
@@ -30,5 +31,38 @@ class Solution {
         if (rans == false)
             return false;
         return true;
+    }
+}
+
+// Approach 2 by pair concept
+class Solution {
+    class Pair{
+        boolean isBST;
+        long max;
+        long min;
+        Pair(){}
+        Pair(boolean isBST,long max,long min){
+            this.isBST=isBST;
+            this.max=max;
+            this.min=min;
+        }
+    }
+    public Pair helper(TreeNode root){
+       if (root==null) return new  Pair(true,Long.MIN_VALUE,Long.MAX_VALUE);
+        Pair lans = helper(root.left);
+        if(!lans.isBST) return new Pair(false,0,0);
+        Pair rans = helper(root.right);
+        if(!rans.isBST) return new Pair(false,0,0);
+        Pair ans = new Pair();
+        ans.isBST = lans.isBST && rans.isBST && lans.max<root.val && root.val<rans.min;
+        ans.max=Math.max(root.val,rans.max);
+        ans.min = Math.min(root.val,lans.min);
+        return ans;
+
+    }
+    public boolean isValidBST(TreeNode root) {
+       Pair ans = helper(root);
+       return ans.isBST;
+
     }
 }
